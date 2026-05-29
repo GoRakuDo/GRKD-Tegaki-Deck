@@ -355,6 +355,16 @@ html.night_mode .grkd-seal-dark {
   display: inline-block;
 }
 
+@media (prefers-color-scheme: dark) {
+  .grkd-seal-light {
+    display: none;
+  }
+
+  .grkd-seal-dark {
+    display: inline-block;
+  }
+}
+
 .grkd-prompt {
   width: 100%;
 }
@@ -576,5 +586,5 @@ hr {
 - 読み込み中は筆順マスのSkeletonを表示します。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
-- ロゴは公開済みGitHubのSVGを読み込みます。Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴをクリック/タップすると `https://gorakudo.org` を開きます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
+- ロゴは公開済みGitHubのSVGを読み込みます。Lightでは黒ロゴ、Darkでは白ロゴを表示します。AnkiのNight Mode classに加えて、OS/ブラウザの `prefers-color-scheme: dark` でも白ロゴへ切り替えます。ロゴをクリック/タップすると `https://gorakudo.org` を開きます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
 - Github公開時はKanjiVGのライセンス表記をREADMEにも入れてください。
