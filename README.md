@@ -112,7 +112,7 @@ https://github.com/KanjiVG/kanjivg
 https://kanjivg.tagaini.net/
 ```
 
-テンプレート内の JavaScript は、KanjiVG の SVG を読み込んで筆順アニメーションとして表示します。現時点では GitHub の raw URL から読み込むため、表示にはネット接続が必要です。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
+テンプレート内の JavaScript は、KanjiVG の SVG を読み込んで筆順アニメーションとして表示します。現時点では GitHub の raw URL から読み込むため、表示にはネット接続が必要です。読み込み中は筆順マスのSkeletonを表示し、同じAnkiセッション内では一度読んだ漢字SVGをメモリ上で再利用します。
 
 オフラインでも安定させたい場合は、将来的に KanjiVG SVG を Anki メディアへ入れるローカル版に切り替える予定です。
 

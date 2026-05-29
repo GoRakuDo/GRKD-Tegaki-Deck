@@ -92,6 +92,17 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
 
   if (status) status.textContent = "筆順を読み込み中…";
 
+  const skeletons = kanji.map(function () {
+    const skeleton = document.createElement("div");
+    const mark = document.createElement("div");
+    skeleton.className = "kvg-card kvg-skeleton";
+    skeleton.setAttribute("aria-hidden", "true");
+    mark.className = "kvg-skeleton-mark";
+    skeleton.appendChild(mark);
+    return skeleton;
+  });
+  target.replaceChildren.apply(target, skeletons);
+
   function fileNameFor(ch) {
     return ch.codePointAt(0).toString(16).padStart(5, "0") + ".svg";
   }
@@ -422,6 +433,35 @@ html.night_mode .grkd-seal-dark {
   box-shadow: 0 14px 36px var(--grkd-shadow);
 }
 
+.kvg-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.kvg-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    var(--grkd-clear),
+    oklch(1 0 0 / 0.42),
+    var(--grkd-clear)
+  );
+  animation: grkd-skeleton-sweep 1.45s ease-in-out infinite;
+}
+
+.kvg-skeleton-mark {
+  width: 100%;
+  height: 100%;
+  border-radius: 13px;
+  background:
+    linear-gradient(135deg, var(--grkd-clear) 46%, var(--grkd-stroke-grid) 47%, var(--grkd-stroke-grid) 53%, var(--grkd-clear) 54%),
+    linear-gradient(45deg, var(--grkd-clear) 46%, var(--grkd-stroke-grid) 47%, var(--grkd-stroke-grid) 53%, var(--grkd-clear) 54%),
+    radial-gradient(circle at 50% 50%, var(--grkd-stroke-grid) 0 10%, var(--grkd-clear) 11%);
+}
+
 .kvg-svg {
   width: 100%;
   height: 100%;
@@ -443,6 +483,12 @@ html.night_mode .grkd-seal-dark {
 @keyframes grkd-draw-stroke {
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes grkd-skeleton-sweep {
+  to {
+    transform: translateX(100%);
   }
 }
 
@@ -511,7 +557,7 @@ hr {
 ## 注意
 
 - この版もKanjiVGのSVGをGitHubから読み込むため、表示にはネット接続が必要です。
-- 同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
+- 読み込み中は筆順マスのSkeletonを表示します。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
 - ロゴは公開済みGitHubのSVGを読み込みます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
