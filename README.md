@@ -4,6 +4,20 @@
 
 Front では読み・音声・短い文脈ヒントを見て、自分の手で漢字を書きます。Back では答えと KanjiVG の筆順アニメーションを見て、書き方を確認します。
 
+## 最新リリース
+
+```text
+v0.1.0 — 1段 Preview
+```
+
+まず使う場合は、GitHub Releases から `.apkg` をダウンロードして Anki に読み込んでください。
+
+```text
+GRKD-Tegaki v0.1.0.apkg
+```
+
+このリリースは **1段だけ** です。2段以降はまだ制作中です。
+
 ## 何が入っているか
 
 ```text
@@ -21,7 +35,7 @@ archive/
 | `GRKD-Tegaki.txt` | Anki インポート用のデッキバックアップです。 |
 | `grkd_tegaki_shodo_desk_template.md` | 現在おすすめのカードデザインです。Light/Dark 対応。 |
 | `grkd_tegaki_1dan_animation_template.md` | 旧版のシンプルな筆順アニメーションテンプレートです。 |
-| `logo_black.svg` / `logo_white.svg` | Light/Dark 用のロゴです。Anki メディアに入れて使います。 |
+| `logo_black.svg` / `logo_white.svg` | Light/Dark 用のロゴです。現在のテンプレートは GitHub 上のSVGを読み込みます。 |
 | `release/` | Anki に入れる更新用 TSV など、実際に使う成果物です。 |
 | `archive/` | 作業途中の TSV、レビュー用 TSV、実験ファイルです。普通は読まなくて大丈夫です。 |
 
@@ -29,7 +43,15 @@ archive/
 
 ### 1. デッキを入れる
 
-Anki で `GRKD-Tegaki.txt` をインポートします。
+一番かんたんな方法は、GitHub Releases から `.apkg` を入れることです。
+
+```text
+GRKD-Tegaki v0.1.0.apkg
+```
+
+手動で組みたい場合だけ、Anki で `GRKD-Tegaki.txt` をインポートします。
+
+`GRKD-Tegaki.txt` は作業用の元データです。普通は `.apkg` 版を使ってください。
 
 ### 2. 1段のヒントを更新する
 
@@ -56,16 +78,16 @@ release/GRKD-Tegaki_1dan_context_hint_update_SAMPLE_SHAPE.tsv
 
 1段だけ変えたい場合は、元のノートタイプを直接編集せず、先にノートタイプを複製してください。元ノートタイプを直接変えると、2段・3段・4段にも見た目が広がります。
 
-### 4. ロゴを使う場合
+### 4. ロゴについて
 
-次の2ファイルを Anki のメディアフォルダへ入れてください。
+現在のテンプレートは、公開済みGitHub上のSVGロゴを直接読み込みます。
 
 ```text
-logo_black.svg
-logo_white.svg
+https://raw.githubusercontent.com/GoRakuDo/GRKD-Tegaki-Deck/main/logo_black.svg
+https://raw.githubusercontent.com/GoRakuDo/GRKD-Tegaki-Deck/main/logo_white.svg
 ```
 
-ロゴがなくてもカード自体は動きます。
+オフラインでもロゴを出したい場合だけ、`logo_black.svg` と `logo_white.svg` を Anki メディアへ入れて、テンプレート内のURLをローカル名へ戻してください。
 
 ## デザイン
 

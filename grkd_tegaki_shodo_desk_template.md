@@ -190,6 +190,11 @@ body,
 #qa {
   min-height: 100vh;
   margin: 0;
+  scrollbar-gutter: stable;
+}
+
+body {
+  overflow-y: scroll;
 }
 
 .card.night_mode,
@@ -274,12 +279,12 @@ body.nightMode #qa {
 }
 
 .grkd-seal-light {
-  background-image: url("logo_black.svg");
+  background-image: url("https://raw.githubusercontent.com/GoRakuDo/GRKD-Tegaki-Deck/main/logo_black.svg");
 }
 
 .grkd-seal-dark {
   display: none;
-  background-image: url("logo_white.svg");
+  background-image: url("https://raw.githubusercontent.com/GoRakuDo/GRKD-Tegaki-Deck/main/logo_white.svg");
 }
 
 .card.night_mode .grkd-seal-light,
@@ -344,8 +349,10 @@ html.night_mode .grkd-seal-dark {
   border-bottom: 1px solid var(--grkd-line);
 }
 
-.grkd-front-echo .grkd-brand {
-  display: none;
+.grkd-front-echo .grkd-card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .grkd-answer {
@@ -481,5 +488,5 @@ hr {
 - この版もKanjiVGのSVGをGitHubから読み込むため、表示にはネット接続が必要です。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
-- ロゴを使う場合は `logo_black.svg` と `logo_white.svg` をAnkiメディアに入れてください。入れない場合はロゴ用の `grkd-seal` の `<span>` を削除してください。
+- ロゴは公開済みGitHubのSVGを読み込みます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
 - Github公開時はKanjiVGのライセンス表記をREADMEにも入れてください。
