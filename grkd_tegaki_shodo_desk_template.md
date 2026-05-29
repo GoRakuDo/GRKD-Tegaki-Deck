@@ -115,6 +115,7 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
   const strokeDurationSeconds = 1.35;
   const kanjiGapSeconds = 0.52;
   const cache = window.__grkdKanjiSvgCache || (window.__grkdKanjiSvgCache = Object.create(null));
+  let replayData = [];
 
   function prepareSvg(svg, ch, startDelaySeconds) {
     svg.removeAttribute("width");
@@ -154,18 +155,37 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
     return { ch: ch, svg: svg, cached: false };
   }
 
-  Promise.allSettled(kanji.map(loadKanji)).then(function (results) {
+  function buildStrokeNodes(items) {
     let nextKanjiDelaySeconds = 0;
-    const nodes = results
+    return items.map(function (item) {
+      const wrap = document.createElement("div");
+      const doc = new DOMParser().parseFromString(item.svgText, "image/svg+xml");
+      const svg = doc.querySelector("svg");
+      if (!svg) throw new Error(item.ch + " invalid replay svg");
+      const paths = Array.from(svg.querySelectorAll("path"));
+      wrap.className = "kvg-card";
+      wrap.appendChild(prepareSvg(svg, item.ch, nextKanjiDelaySeconds));
+      nextKanjiDelaySeconds += paths.length * strokeDelaySeconds + strokeDurationSeconds + kanjiGapSeconds;
+      return wrap;
+    });
+  }
+
+  function replayStrokeOrder() {
+    if (replayData.length === 0) return;
+    const nodes = buildStrokeNodes(replayData);
+    target.replaceChildren.apply(target, nodes);
+  }
+
+  target.addEventListener("click", replayStrokeOrder);
+
+  Promise.allSettled(kanji.map(loadKanji)).then(function (results) {
+    replayData = results
       .filter(function (result) { return result.status === "fulfilled"; })
       .map(function (result) {
-        const wrap = document.createElement("div");
-        const paths = Array.from(result.value.svg.querySelectorAll("path"));
-        wrap.className = "kvg-card";
-        wrap.appendChild(prepareSvg(result.value.svg, result.value.ch, nextKanjiDelaySeconds));
-        nextKanjiDelaySeconds += paths.length * strokeDelaySeconds + strokeDurationSeconds + kanjiGapSeconds;
-        return wrap;
+        return { ch: result.value.ch, svgText: cache[result.value.ch] };
       });
+
+    const nodes = buildStrokeNodes(replayData);
 
     const failed = results.filter(function (result) { return result.status === "rejected"; }).length;
     const loaded = nodes.length;
@@ -443,6 +463,7 @@ html.night_mode .grkd-seal-dark {
   justify-content: center;
   gap: 16px;
   width: 100%;
+  cursor: pointer;
 }
 
 .kvg-card {
@@ -584,7 +605,7 @@ hr {
 ## 注意
 
 - この版もKanjiVGのSVGをGitHubから読み込むため、表示にはネット接続が必要です。
-- 読み込み中は筆順マスのSkeletonを表示します。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
+- 読み込み中は筆順マスのSkeletonを表示します。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。筆順マスをクリック/タップするとアニメーションを最初から再生します。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
 - ロゴは公開済みGitHubのSVGを読み込みます。Lightでは黒ロゴ、Darkでは黒SVGをCSS反転して白ロゴとして表示します。AnkiのNight Mode classに加えて、OS/ブラウザの `prefers-color-scheme: dark` でも白ロゴへ切り替えます。ロゴをクリック/タップすると `https://gorakudo.org` を開きます。オフラインでも表示したい場合は、`logo_black.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
