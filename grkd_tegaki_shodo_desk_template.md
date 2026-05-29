@@ -30,9 +30,11 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
 
 ```html
 <main class="grkd-card grkd-front-card">
-  <header class="grkd-brand" aria-hidden="true">
-    <span class="grkd-seal grkd-seal-light"></span>
-    <span class="grkd-seal grkd-seal-dark"></span>
+  <header class="grkd-brand">
+    <a class="grkd-logo-link" href="https://gorakudo.org" target="_blank" rel="noopener" aria-label="GoRakuDo公式サイトを開く">
+      <span class="grkd-seal grkd-seal-light" aria-hidden="true"></span>
+      <span class="grkd-seal grkd-seal-dark" aria-hidden="true"></span>
+    </a>
   </header>
 
   <section class="grkd-prompt" aria-label="問題">
@@ -68,8 +70,10 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
 
   <footer class="grkd-footer">
     <span>筆順データ: KanjiVG © Ulrich Apel, CC BY-SA 3.0</span>
-    <span class="grkd-footer-seal grkd-seal-light" aria-hidden="true"></span>
-    <span class="grkd-footer-seal grkd-seal-dark" aria-hidden="true"></span>
+    <a class="grkd-logo-link" href="https://gorakudo.org" target="_blank" rel="noopener" aria-label="GoRakuDo公式サイトを開く">
+      <span class="grkd-footer-seal grkd-seal-light" aria-hidden="true"></span>
+      <span class="grkd-footer-seal grkd-seal-dark" aria-hidden="true"></span>
+    </a>
   </footer>
 </main>
 
@@ -303,6 +307,14 @@ body.nightMode #qa {
   margin-bottom: clamp(18px, 5vw, 42px);
 }
 
+.grkd-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  text-decoration: none;
+}
+
 .grkd-seal,
 .grkd-footer-seal {
   display: inline-block;
@@ -326,6 +338,8 @@ body.nightMode #qa {
 .card.night_mode .grkd-seal-light,
 .nightMode .card .grkd-seal-light,
 .night_mode .card .grkd-seal-light,
+body.nightMode .grkd-seal-light,
+body.night_mode .grkd-seal-light,
 html.night-mode .grkd-seal-light,
 html.night_mode .grkd-seal-light {
   display: none;
@@ -334,6 +348,8 @@ html.night_mode .grkd-seal-light {
 .card.night_mode .grkd-seal-dark,
 .nightMode .card .grkd-seal-dark,
 .night_mode .card .grkd-seal-dark,
+body.nightMode .grkd-seal-dark,
+body.night_mode .grkd-seal-dark,
 html.night-mode .grkd-seal-dark,
 html.night_mode .grkd-seal-dark {
   display: inline-block;
@@ -560,5 +576,5 @@ hr {
 - 読み込み中は筆順マスのSkeletonを表示します。同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
-- ロゴは公開済みGitHubのSVGを読み込みます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
+- ロゴは公開済みGitHubのSVGを読み込みます。Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴをクリック/タップすると `https://gorakudo.org` を開きます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
 - Github公開時はKanjiVGのライセンス表記をREADMEにも入れてください。
