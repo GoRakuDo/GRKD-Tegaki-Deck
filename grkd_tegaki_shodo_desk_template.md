@@ -90,6 +90,8 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
     return;
   }
 
+  if (status) status.textContent = "筆順を読み込み中…";
+
   function fileNameFor(ch) {
     return ch.codePointAt(0).toString(16).padStart(5, "0") + ".svg";
   }
@@ -97,6 +99,7 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
   const strokeDelaySeconds = 0.48;
   const strokeDurationSeconds = 1.35;
   const kanjiGapSeconds = 0.52;
+  const cache = window.__grkdKanjiSvgCache || (window.__grkdKanjiSvgCache = Object.create(null));
 
   function prepareSvg(svg, ch, startDelaySeconds) {
     svg.removeAttribute("width");
@@ -118,14 +121,22 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
   }
 
   async function loadKanji(ch) {
+    if (cache[ch]) {
+      const cachedDoc = new DOMParser().parseFromString(cache[ch], "image/svg+xml");
+      const cachedSvg = cachedDoc.querySelector("svg");
+      if (!cachedSvg) throw new Error(ch + " invalid cached svg");
+      return { ch: ch, svg: cachedSvg, cached: true };
+    }
+
     const url = "https://raw.githubusercontent.com/KanjiVG/kanjivg/r20250816/kanji/" + fileNameFor(ch);
     const response = await fetch(url);
     if (!response.ok) throw new Error(ch + " not found");
     const text = await response.text();
+    cache[ch] = text;
     const doc = new DOMParser().parseFromString(text, "image/svg+xml");
     const svg = doc.querySelector("svg");
     if (!svg) throw new Error(ch + " invalid svg");
-    return { ch: ch, svg: svg };
+    return { ch: ch, svg: svg, cached: false };
   }
 
   Promise.allSettled(kanji.map(loadKanji)).then(function (results) {
@@ -142,8 +153,22 @@ Lightでは黒ロゴ、Darkでは白ロゴを表示します。ロゴなしで�
       });
 
     const failed = results.filter(function (result) { return result.status === "rejected"; }).length;
+    const loaded = nodes.length;
+    const fromCache = results.filter(function (result) {
+      return result.status === "fulfilled" && result.value.cached;
+    }).length;
     target.replaceChildren.apply(target, nodes);
-    if (status) status.textContent = failed > 0 ? "筆順がありません" : "";
+    if (status) {
+      if (failed > 0 && loaded === 0) {
+        status.textContent = "筆順がありません";
+      } else if (failed > 0) {
+        status.textContent = "一部の筆順がありません";
+      } else if (fromCache > 0) {
+        status.textContent = "";
+      } else {
+        status.textContent = "";
+      }
+    }
   });
 })();
 </script>
@@ -486,6 +511,7 @@ hr {
 ## 注意
 
 - この版もKanjiVGのSVGをGitHubから読み込むため、表示にはネット接続が必要です。
+- 同じAnkiセッション内では、一度読んだ漢字SVGをメモリ上で再利用します。
 - AnkiDroid / AnkiMobileまで安定させるなら、将来的にKanjiVG SVGをAnkiメディアへ入れるローカル版に切り替えるのがおすすめです。
 - `ContextHint` が空のカードでは、Frontにお題カードは出ません。
 - ロゴは公開済みGitHubのSVGを読み込みます。オフラインでも表示したい場合は、`logo_black.svg` と `logo_white.svg` をAnkiメディアへ入れて、CSSのURLをローカル名へ戻してください。
