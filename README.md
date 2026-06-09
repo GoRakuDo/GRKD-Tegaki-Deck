@@ -4,6 +4,8 @@
 
 Front では読み・音声・短い文脈ヒントを見て、自分の手で漢字を書きます。Back では答えと KanjiVG の筆順アニメーションを見て、書き方を確認します。
 
+![GRKD-Tegaki Deck Preview](repo_assets/GRKD-Tegaki-Deck-Preview.gif)
+
 ## 最新リリース
 
 ```text
