@@ -7,16 +7,18 @@ Front では読み・音声・短い文脈ヒントを見て、自分の手で�
 ## 最新リリース
 
 ```text
-v0.1.0 — 1段 Preview
+v0.1.1 — 1段 ContextHint修正版
 ```
 
 まず使う場合は、GitHub Releases から `.apkg` をダウンロードして Anki に読み込んでください。
 
 ```text
-GRKD-Tegaki v0.1.0.apkg
+GRKD-Tegaki.v0.1.1.apkg
 ```
 
 このリリースは **1段だけ** です。2段以降はまだ制作中です。
+
+前バージョンは [v0.1.0](https://github.com/GoRakuDo/GRKD-Tegaki-Deck/releases/tag/v0.1.0) からダウンロード可能です。
 
 ## 何が入っているか
 
@@ -46,7 +48,7 @@ archive/
 一番かんたんな方法は、GitHub Releases から `.apkg` を入れることです。
 
 ```text
-GRKD-Tegaki v0.1.0.apkg
+GRKD-Tegaki.v0.1.1.apkg
 ```
 
 手動で組みたい場合だけ、Anki で `GRKD-Tegaki.txt` をインポートします。
