@@ -458,9 +458,8 @@ html.night_mode .grkd-seal-dark {
 }
 
 .grkd-stroke-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   width: 100%;
   cursor: pointer;
@@ -468,8 +467,8 @@ html.night_mode .grkd-seal-dark {
 
 .kvg-card {
   box-sizing: border-box;
-  width: clamp(142px, 34vw, 204px);
-  height: clamp(142px, 34vw, 204px);
+  width: 100%;
+  aspect-ratio: 1;
   padding: 13px;
   border: 1px solid var(--grkd-stroke-border);
   border-radius: 20px;
@@ -572,6 +571,13 @@ hr {
   display: none;
 }
 
+@media screen and (max-width: 560px) {
+  .grkd-stroke-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .grkd-card {
     width: 100%;
@@ -584,13 +590,7 @@ hr {
     border-radius: 17px;
   }
 
-  .grkd-stroke-grid {
-    gap: 12px;
-  }
-
   .kvg-card {
-    width: min(43vw, 172px);
-    height: min(43vw, 172px);
     border-radius: 16px;
   }
 
