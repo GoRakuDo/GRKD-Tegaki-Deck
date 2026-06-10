@@ -578,8 +578,10 @@ hr {
   }
 
   .kvg-card {
-    width: min(43vw, 172px);
-    height: min(43vw, 172px);
+    flex: 0 0 calc(50% - 6px);
+    width: calc(50% - 6px);
+    height: auto;
+    aspect-ratio: 1;
   }
 }
 
