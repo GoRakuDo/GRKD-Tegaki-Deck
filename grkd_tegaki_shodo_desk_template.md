@@ -572,7 +572,7 @@ hr {
   display: none;
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: 800px) {
   .grkd-stroke-grid {
     gap: 12px;
   }
