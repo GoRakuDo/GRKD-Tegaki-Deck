@@ -468,8 +468,8 @@ html.night_mode .grkd-seal-dark {
 
 .kvg-card {
   box-sizing: border-box;
-  width: clamp(142px, 34vw, 204px);
-  height: clamp(142px, 34vw, 204px);
+  width: clamp(130px, 30vw, 178px);
+  height: clamp(130px, 30vw, 178px);
   padding: 13px;
   border: 1px solid var(--grkd-stroke-border);
   border-radius: 20px;
