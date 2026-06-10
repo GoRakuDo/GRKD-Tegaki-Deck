@@ -458,8 +458,9 @@ html.night_mode .grkd-seal-dark {
 }
 
 .grkd-stroke-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   width: 100%;
   cursor: pointer;
@@ -467,8 +468,8 @@ html.night_mode .grkd-seal-dark {
 
 .kvg-card {
   box-sizing: border-box;
-  width: 100%;
-  aspect-ratio: 1;
+  width: clamp(142px, 34vw, 204px);
+  height: clamp(142px, 34vw, 204px);
   padding: 13px;
   border: 1px solid var(--grkd-stroke-border);
   border-radius: 20px;
@@ -573,8 +574,12 @@ hr {
 
 @media screen and (max-width: 560px) {
   .grkd-stroke-grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+
+  .kvg-card {
+    width: min(43vw, 172px);
+    height: min(43vw, 172px);
   }
 }
 
